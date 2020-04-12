@@ -50,6 +50,7 @@ export const Header = () => {
     }, []);
 
     useEffect(() => {
+        if (!searchDebounced) return;
         history.push({
             pathname: '/search',
             search: `?q=${searchDebounced}`,

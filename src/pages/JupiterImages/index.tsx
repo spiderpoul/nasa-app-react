@@ -17,7 +17,7 @@ function JupiterImages() {
         fetchData();
     }, []);
 
-    return <ImagesGrid images={images.slice(0, 10)} />;
+    return <ImagesGrid items={images.slice(0, 10)} />;
 }
 
 export default JupiterImages;

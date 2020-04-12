@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 const NAV_ITEMS = [
     { to: '/', title: 'Picture of the day', exact: true },
     { to: '/earth', title: 'Earth' },
-    { to: '/moon', title: 'Moon' },
+    { to: '/uranus', title: 'Uranus' },
     { to: '/jupiter', title: 'Jupiter' },
     { to: '/mars', title: 'Mars' },
     { to: '/mercury', title: 'Mercury' },

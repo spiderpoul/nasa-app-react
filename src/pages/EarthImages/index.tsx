@@ -17,7 +17,7 @@ function EarthImages() {
         fetchData();
     }, []);
 
-    return <ImagesGrid images={images.slice(0, 10)} />;
+    return <ImagesGrid items={images} />;
 }
 
 export default EarthImages;

@@ -29,7 +29,7 @@ function SearchImages() {
     }, [location.search]);
 
     return images ? (
-        <ImagesGrid images={images.slice(0, 10)} />
+        <ImagesGrid items={images.slice(0, 10)} />
     ) : (
         <Placeholder>No results found.</Placeholder>
     );
