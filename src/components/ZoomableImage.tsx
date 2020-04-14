@@ -1,4 +1,4 @@
-import React, { useState, useRef, SyntheticEvent } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 
 const ImageContainer = styled('div')<{ width?: number; height: number }>`

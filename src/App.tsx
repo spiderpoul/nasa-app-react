@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ParallaxProvider } from 'react-scroll-parallax';
 
@@ -17,8 +17,16 @@ import PlutoImages from './pages/PlutoImages';
 import SaturnImages from './pages/SaturnImages';
 import VenusImages from './pages/VenusImages';
 import UranusImages from './pages/UranusImages';
+import { useDispatch } from 'react-redux';
+import { fetchPictureOfTheDay } from './store/PictureOfTheDay/actions';
 
 function App() {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchPictureOfTheDay());
+    }, [dispatch]);
+
     return (
         <Router>
             <ParallaxProvider>

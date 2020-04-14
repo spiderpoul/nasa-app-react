@@ -37,6 +37,8 @@ const PictureOfTheDayReducer = (
                 error: action.payload.error,
             };
         }
+        default:
+            return initState;
     }
 };
 

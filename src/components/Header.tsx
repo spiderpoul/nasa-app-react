@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDebounce } from '../hooks/useDebounce';
+import { useSelector } from 'react-redux';
+import { selectPictureOfTheDayData } from '../store/PictureOfTheDay/selectors';
 
 const HeaderContainer = styled.div`
     position: relative;
@@ -40,10 +42,11 @@ const SearchInput = styled.input`
 `;
 
 export const Header = () => {
-    const [imageOfTheDay, setImageOfTheDay] = useState<any>(null);
     const [search, setSearch] = useState('');
     const searchDebounced = useDebounce(search);
     const history = useHistory();
+
+    const pictureOfTheDay = useSelector(selectPictureOfTheDayData);
 
     const onInput = useCallback((e) => {
         setSearch(e.target.value);
@@ -57,29 +60,17 @@ export const Header = () => {
         });
     }, [history, searchDebounced]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const data: any = await fetch(
-                `https://api.nasa.gov/planetary/apod?api_key=dZmuqhbS2Esu9rTmTrtjb2pMOYi9QgpuvicXyqEK`
-            );
-            const res = await data?.json();
-            setImageOfTheDay(res);
-        };
-
-        fetchData();
-    }, []);
-
     return (
         <HeaderContainer>
-            {imageOfTheDay && (
+            {pictureOfTheDay && (
                 <>
-                    {imageOfTheDay.media_type === 'video' ? (
+                    {pictureOfTheDay.media_type === 'video' ? (
                         <HeaderVideo
                             frameBorder="0"
-                            src={`${imageOfTheDay.url}&autoplay=1&controls=0&showinfo=0&loop=1&autohide=1&mute=1`}
+                            src={`${pictureOfTheDay.url}&autoplay=1&controls=0&showinfo=0&loop=1&autohide=1&mute=1`}
                         />
                     ) : (
-                        <HeaderImage bgImage={imageOfTheDay.hdurl} />
+                        <HeaderImage bgImage={pictureOfTheDay.hdurl} />
                     )}
                 </>
             )}

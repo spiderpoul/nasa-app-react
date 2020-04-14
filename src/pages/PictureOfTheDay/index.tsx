@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { selectPictureOfTheDayData } from '../../store/PictureOfTheDay/selectors';
+import { useSelector } from 'react-redux';
 
 const Text = styled.div`
     font-size: 18px;
@@ -30,33 +32,21 @@ const Title = styled.div`
 `;
 
 const PictureOfTheDay = () => {
-    const [imageOfTheDay, setImageOfTheDay] = useState<any>(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const data: any = await fetch(
-                `https://api.nasa.gov/planetary/apod?api_key=dZmuqhbS2Esu9rTmTrtjb2pMOYi9QgpuvicXyqEK`
-            );
-            const res = await data?.json();
-            setImageOfTheDay(res);
-        };
-
-        fetchData();
-    }, []);
+    const pictureOfTheDay = useSelector(selectPictureOfTheDayData);
 
     return (
         <Container>
-            {imageOfTheDay && (
+            {pictureOfTheDay && (
                 <>
-                    <Title>{imageOfTheDay.title}</Title>
-                    <Text>{imageOfTheDay.explanation}</Text>
-                    {imageOfTheDay.media_type === 'video' ? (
+                    <Title>{pictureOfTheDay.title}</Title>
+                    <Text>{pictureOfTheDay.explanation}</Text>
+                    {pictureOfTheDay.media_type === 'video' ? (
                         <Video
                             frameBorder="0"
-                            src={`${imageOfTheDay.url}&autoplay=1&controls=0&showinfo=0&loop=1&autohide=1&mute=1`}
+                            src={`${pictureOfTheDay.url}&autoplay=1&controls=0&showinfo=0&loop=1&autohide=1&mute=1`}
                         />
                     ) : (
-                        <Image src={imageOfTheDay.hdurl} />
+                        <Image src={pictureOfTheDay.hdurl} />
                     )}
                 </>
             )}
