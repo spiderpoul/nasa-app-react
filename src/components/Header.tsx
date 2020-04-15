@@ -31,7 +31,8 @@ const SearchInput = styled.input`
     top: 180px;
     left: 50%;
     transform: translateX(-50%);
-    width: 780px;
+    max-width: 780px;
+    width: 100%;
     border-radius: 24px;
     padding: 12px 24px;
     font-size: 18px;

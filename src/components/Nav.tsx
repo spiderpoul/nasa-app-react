@@ -48,6 +48,7 @@ const NavContainer = styled.div`
     padding: 0 24px 24px;
     margin: 0 -24px;
     border-bottom: 1px solid #ccc;
+    flex-wrap: wrap;
 `;
 
 export default Nav;
