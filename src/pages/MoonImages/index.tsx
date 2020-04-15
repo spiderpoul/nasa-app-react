@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import ImagesGrid from '../../components/ImagesGrid';
+import CardGrid from '../../components/ImagesGrid';
 
 function MoonImages() {
     const [images, setImages] = useState([]);
@@ -17,7 +17,7 @@ function MoonImages() {
         fetchData();
     }, []);
 
-    return <ImagesGrid items={images.slice(0, 10)} />;
+    return <CardGrid items={images.slice(0, 10)} />;
 }
 
 export default MoonImages;

@@ -2,6 +2,7 @@ import React from 'react';
 import StackGrid, { transitions } from 'react-stack-grid';
 import styled from 'styled-components';
 import LibraryItem from './LibraryItem';
+import CardGridPlaceholder from './CardGridPlaceholder';
 import { LibraryItemModel } from '../models';
 
 const { scaleDown } = transitions;
@@ -11,13 +12,30 @@ const ImageGridContainer = styled.div`
     margin: 0 -24px;
 `;
 
+const LoaderContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0 36px;
+`;
+
 interface ImagesGridProps {
-    items: LibraryItemModel[];
+    items?: LibraryItemModel[];
+    isLoading?: boolean;
 }
 
-const ImagesGrid: React.FC<ImagesGridProps> = ({ items }) => {
+const PLACEHOLDER_COUNTS = 10;
+
+const CardGrid: React.FC<ImagesGridProps> = ({ items, isLoading }) => {
     return (
         <ImageGridContainer>
+            {isLoading && (
+                <LoaderContainer>
+                    {[...Array(PLACEHOLDER_COUNTS)].map((x, index) => (
+                        <CardGridPlaceholder key={index} />
+                    ))}
+                </LoaderContainer>
+            )}
             <StackGrid
                 key="StackGrid"
                 columnWidth={370}
@@ -37,4 +55,4 @@ const ImagesGrid: React.FC<ImagesGridProps> = ({ items }) => {
     );
 };
 
-export default ImagesGrid;
+export default CardGrid;

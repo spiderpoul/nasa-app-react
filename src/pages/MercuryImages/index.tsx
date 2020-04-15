@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-import ImagesGrid from '../../components/ImagesGrid';
+import CardGrid from '../../components/ImagesGrid';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    selectMercuryData,
+    selectMercuryIsLoading,
+} from '../../store/MercuryPage/selectors';
+import { fetchMercuryData } from '../../store/MercuryPage/actions';
 
 function MercuryImages() {
-    const [images, setImages] = useState([]);
+    const dispatch = useDispatch();
+    const data = useSelector(selectMercuryData);
+    const isLoading = useSelector(selectMercuryIsLoading);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const data: any = await fetch(
-                `https://images-api.nasa.gov/search?q=mercury&page=1`
-            );
-            const res = await data?.json();
-            setImages(res?.collection?.items);
-        };
+        dispatch(fetchMercuryData());
+    }, [dispatch]);
 
-        fetchData();
-    }, []);
+    console.log(data?.items, isLoading);
 
-    return <ImagesGrid items={images.slice(0, 10)} />;
+    return <CardGrid items={data?.items} isLoading={isLoading} />;
 }
 
 export default MercuryImages;

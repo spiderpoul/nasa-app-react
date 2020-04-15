@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import ImagesGrid from '../../components/ImagesGrid';
+import CardGrid from '../../components/ImagesGrid';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -29,7 +29,7 @@ function SearchImages() {
     }, [location.search]);
 
     return images ? (
-        <ImagesGrid items={images.slice(0, 10)} />
+        <CardGrid items={images.slice(0, 10)} />
     ) : (
         <Placeholder>No results found.</Placeholder>
     );

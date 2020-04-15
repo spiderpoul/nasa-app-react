@@ -38,7 +38,7 @@ const PictureOfTheDayReducer = (
             };
         }
         default:
-            return initState;
+            return state;
     }
 };
 
