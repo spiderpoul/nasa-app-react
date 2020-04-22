@@ -5,18 +5,18 @@ import { ParallaxProvider } from 'react-scroll-parallax';
 import { Header } from './components/Header';
 import styled from 'styled-components';
 import Content from './components/Content';
-import EarthImages from './pages/EarthImages';
+import EarthPage from './pages/EarthPage';
 import PictureOfTheDay from './pages/PictureOfTheDay';
-import MoonImages from './pages/MoonImages';
-import SearchImages from './pages/SearchImages';
-import JupiterImages from './pages/JupiterImages';
-import MarsImages from './pages/MarsImages';
-import MercuryImages from './pages/MercuryImages';
-import NeptuneImages from './pages/NeptuneImages';
-import PlutoImages from './pages/PlutoImages';
-import SaturnImages from './pages/SaturnImages';
-import VenusImages from './pages/VenusImages';
-import UranusImages from './pages/UranusImages';
+import MoonPage from './pages/MoonPage';
+import SearchPage from './pages/SearchPage';
+import JupiterPage from './pages/JupiterPage';
+import MarsPage from './pages/MarsPage';
+import MercuryPage from './pages/MercuryPage';
+import NeptunePage from './pages/NeptunePage';
+import PlutoPage from './pages/PlutoPage';
+import SaturnPage from './pages/SaturnPage';
+import VenusPage from './pages/VenusPage';
+import UranusPage from './pages/UranusPage';
 import { useDispatch } from 'react-redux';
 import { fetchPictureOfTheDay } from './store/PictureOfTheDay/actions';
 
@@ -35,17 +35,17 @@ function App() {
                     <Content>
                         <Switch>
                             <Route path="/" exact component={PictureOfTheDay} />
-                            <Route path="/earth" component={EarthImages} />
-                            <Route path="/moon" component={MoonImages} />
-                            <Route path="/uranus" component={UranusImages} />
-                            <Route path="/jupiter" component={JupiterImages} />
-                            <Route path="/mars" component={MarsImages} />
-                            <Route path="/mercury" component={MercuryImages} />
-                            <Route path="/neptune" component={NeptuneImages} />
-                            <Route path="/saturn" component={SaturnImages} />
-                            <Route path="/venus" component={VenusImages} />
-                            <Route path="/pluto" component={PlutoImages} />
-                            <Route path="/search" component={SearchImages} />
+                            <Route path="/earth" component={EarthPage} />
+                            <Route path="/moon" component={MoonPage} />
+                            <Route path="/uranus" component={UranusPage} />
+                            <Route path="/jupiter" component={JupiterPage} />
+                            <Route path="/mars" component={MarsPage} />
+                            <Route path="/mercury" component={MercuryPage} />
+                            <Route path="/neptune" component={NeptunePage} />
+                            <Route path="/saturn" component={SaturnPage} />
+                            <Route path="/venus" component={VenusPage} />
+                            <Route path="/pluto" component={PlutoPage} />
+                            <Route path="/search" component={SearchPage} />
                         </Switch>
                     </Content>
                 </Layout>

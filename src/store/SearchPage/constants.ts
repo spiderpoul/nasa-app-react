@@ -1,0 +1,7 @@
+export const API_URL = 'https://images-api.nasa.gov/search';
+
+export const SEARCH_PAGE_NASA_REQUEST = 'SEARCH_PAGE_NASA_REQUEST';
+export const SEARCH_PAGE_NASA_SUCCESS = 'SEARCH_PAGE_NASA_SUCCESS';
+export const SEARCH_PAGE_NASA_ERROR = 'SEARCH_PAGE_NASA_ERROR';
+
+export const SEARCH_PAGE_SET_SEARCH = 'SEARCH_PAGE_SET_SEARCH';

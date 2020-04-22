@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
-import { useDebounce } from '../hooks/useDebounce';
-import { useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectPictureOfTheDayData } from '../store/PictureOfTheDay/selectors';
+import { selectSearch } from '../store/SearchPage/selectors';
+import { setSearch } from '../store/SearchPage/actionsCreators';
 
 const HeaderContainer = styled.div`
     position: relative;
@@ -43,23 +44,39 @@ const SearchInput = styled.input`
 `;
 
 export const Header = () => {
-    const [search, setSearch] = useState('');
-    const searchDebounced = useDebounce(search);
+    const search = useSelector(selectSearch);
     const history = useHistory();
+    const location = useLocation();
+    const dispatch = useDispatch();
+    const refInput = useRef<HTMLInputElement>(null);
 
     const pictureOfTheDay = useSelector(selectPictureOfTheDayData);
 
-    const onInput = useCallback((e) => {
-        setSearch(e.target.value);
-    }, []);
+    const onInput = useCallback(
+        (e) => {
+            dispatch(setSearch({ search: e.target.value }));
+        },
+        [dispatch]
+    );
 
     useEffect(() => {
-        if (!searchDebounced) return;
-        history.push({
-            pathname: '/search',
-            search: `?q=${searchDebounced}`,
-        });
-    }, [history, searchDebounced]);
+        if (search) {
+            if (
+                location.pathname !== '/search' &&
+                refInput.current === document.activeElement
+            ) {
+                history.push({
+                    pathname: '/search',
+                });
+            }
+        } else {
+            if (location.pathname === '/search') {
+                history.push({
+                    pathname: '/',
+                });
+            }
+        }
+    }, [history, location.pathname, search]);
 
     return (
         <HeaderContainer>
@@ -77,6 +94,7 @@ export const Header = () => {
             )}
             <SearchInput
                 value={search}
+                ref={refInput}
                 onChange={onInput}
                 placeholder="Search for NASA images and videos"
             />
