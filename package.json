@@ -41,6 +41,7 @@
         "tslint": "^6.0.0",
         "tslint-config-airbnb": "5.11.2",
         "tslint-react": "4.2.0",
+        "tslint-react-hooks": "^2.2.2",
         "typescript": "3.8.3"
     },
     "scripts": {

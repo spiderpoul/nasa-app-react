@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 const NAV_ITEMS = [
     { to: '/', title: 'Picture of the day', exact: true },
     { to: '/earth', title: 'Earth' },
+    { to: '/moon', title: 'Moon' },
     { to: '/uranus', title: 'Uranus' },
     { to: '/jupiter', title: 'Jupiter' },
     { to: '/mars', title: 'Mars' },
@@ -28,11 +29,12 @@ const Nav: React.FC<{}> = () => {
 };
 
 const NavItem = styled(NavLink)`
+    position: relative;
     padding: 0 15px;
     font-size: 24px;
     text-decoration: none;
     color: #000;
-    padding: 0 18px;
+    padding: 0 16px;
 
     &:hover {
         color: darkcyan;
@@ -40,6 +42,15 @@ const NavItem = styled(NavLink)`
 
     &.active {
         color: darkcyan;
+
+        &:before {
+            content: '';
+            position: absolute;
+            bottom: -24px;
+            left: 0;
+            width: 100%;
+            border-bottom: 2px solid darkcyan;
+        }
     }
 `;
 
