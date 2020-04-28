@@ -1,51 +1,33 @@
-import { SearchPageState } from '../../models';
-import { ActionsTypes } from './actionsCreators';
-import {
-    SEARCH_PAGE_NASA_ERROR,
-    SEARCH_PAGE_NASA_REQUEST,
-    SEARCH_PAGE_NASA_SUCCESS,
-    SEARCH_PAGE_SET_SEARCH,
-} from './constants';
+import { API_URL } from './constants';
+import { createReduxFetcher } from '../createReduxFetcher';
+import { LibraryResponse, SearchFiltersState } from '../../models';
+import Axios from 'axios';
+import { combineReducers } from 'redux';
+import { buildReducer } from 'redux-blaze';
 
-const initState: SearchPageState = {
-    data: null,
-    isLoading: true,
-    error: null,
+export const SearchFetcher = createReduxFetcher<LibraryResponse>({
+    fetcher: (search) => Axios.get(`${API_URL}?q=${search}`),
+    getState: (state) => state.searchPage.model,
+    mutate: (res) => res?.data?.collection,
+    prefix: 'SEARCH_PAGE',
+});
+
+const SearchFiltersInitialState: SearchFiltersState = {
     search: '',
 };
 
-const SearchReducer = (state = initState, action: ActionsTypes) => {
-    switch (action.type) {
-        case SEARCH_PAGE_NASA_REQUEST: {
-            return {
-                ...state,
-                isLoading: true,
-            };
-        }
-        case SEARCH_PAGE_NASA_SUCCESS: {
-            return {
-                ...state,
-                isLoading: false,
-                data: action.payload.data,
-            };
-        }
-        case SEARCH_PAGE_SET_SEARCH: {
-            return {
-                ...state,
-                isLoading: false,
-                search: action.payload.search,
-            };
-        }
-        case SEARCH_PAGE_NASA_ERROR: {
-            return {
-                ...state,
-                isLoading: false,
-                error: action.payload.error,
-            };
-        }
-        default:
-            return state;
-    }
-};
+export const SearchPageFilters = buildReducer(
+    SearchFiltersInitialState,
+    {
+        setSearch: (a: { search: string }) => (s) => ({
+            ...s,
+            search: a.search,
+        }),
+    },
+    { prefix: 'SEARCH_PAGE_FILTERS' }
+);
 
-export default SearchReducer;
+export default combineReducers({
+    filters: SearchPageFilters.reducer,
+    model: SearchFetcher.reducer,
+});

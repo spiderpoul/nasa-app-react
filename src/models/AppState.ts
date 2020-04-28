@@ -4,7 +4,7 @@ export interface AppState {
     pictureOfTheDay: PictureOfTheDayState;
     mercuryPage: MercuryPageState;
     venusPage: VenusPageState;
-    earthPage: EarthPageState;
+    earthPage: FetcherModel<LibraryResponse>;
     marsPage: MarsPageState;
     jupiterPage: JupiterPageState;
     saturnPage: SaturnPageState;
@@ -15,6 +15,12 @@ export interface AppState {
     searchPage: SearchPageState;
 }
 
+export interface FetcherModel<TModel> {
+    data: TModel | null;
+    isLoading: boolean;
+    error: boolean;
+}
+
 export interface PictureOfTheDayState {
     isLoading: boolean;
     error: any;
@@ -22,9 +28,11 @@ export interface PictureOfTheDayState {
 }
 
 export interface SearchPageState {
-    isLoading: boolean;
-    error: any;
-    data: LibraryResponse | null;
+    model: FetcherModel<LibraryResponse>;
+    filters: SearchFiltersState;
+}
+
+export interface SearchFiltersState {
     search: string;
 }
 

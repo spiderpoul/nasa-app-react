@@ -1,42 +1,13 @@
-import { EarthPageState } from '../../models';
-import { ActionsTypes } from './actionsCreators';
-import {
-    EARTH_PAGE_NASA_ERROR,
-    EARTH_PAGE_NASA_REQUEST,
-    EARTH_PAGE_NASA_SUCCESS,
-} from './constants';
+import { API_URL } from './constants';
+import { createReduxFetcher } from '../createReduxFetcher';
+import { LibraryResponse } from '../../models';
+import Axios from 'axios';
 
-const initState: EarthPageState = {
-    data: null,
-    isLoading: true,
-    error: null,
-};
+export const EarthFetcher = createReduxFetcher<LibraryResponse>({
+    fetcher: () => Axios.get(API_URL),
+    getState: (state) => state.earthPage,
+    mutate: (res) => res.data?.collection,
+    prefix: 'EARTH_PAGE',
+});
 
-const EarthReducer = (state = initState, action: ActionsTypes) => {
-    switch (action.type) {
-        case EARTH_PAGE_NASA_REQUEST: {
-            return {
-                ...state,
-                isLoading: true,
-            };
-        }
-        case EARTH_PAGE_NASA_SUCCESS: {
-            return {
-                ...state,
-                isLoading: false,
-                data: action.payload.data,
-            };
-        }
-        case EARTH_PAGE_NASA_ERROR: {
-            return {
-                ...state,
-                isLoading: false,
-                error: action.payload.error,
-            };
-        }
-        default:
-            return state;
-    }
-};
-
-export default EarthReducer;
+export default EarthFetcher.reducer;

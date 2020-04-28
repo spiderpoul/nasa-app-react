@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectPictureOfTheDayData } from '../store/PictureOfTheDay/selectors';
 import { selectSearch } from '../store/SearchPage/selectors';
-import { setSearch } from '../store/SearchPage/actionsCreators';
+import { SearchPageFilters } from '../store/SearchPage/reducer';
 
 const HeaderContainer = styled.div`
     position: relative;
@@ -48,15 +48,16 @@ export const Header = () => {
     const history = useHistory();
     const location = useLocation();
     const dispatch = useDispatch();
+    const { setSearch } = SearchPageFilters.bind(dispatch);
     const refInput = useRef<HTMLInputElement>(null);
 
     const pictureOfTheDay = useSelector(selectPictureOfTheDayData);
 
     const onInput = useCallback(
         (e) => {
-            dispatch(setSearch({ search: e.target.value }));
+            setSearch({ search: e.target.value });
         },
-        [dispatch]
+        [setSearch]
     );
 
     useEffect(() => {
