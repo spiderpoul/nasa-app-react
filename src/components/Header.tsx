@@ -2,9 +2,10 @@ import React, { useEffect, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectPictureOfTheDayData } from '../store/PictureOfTheDay/selectors';
 import { selectSearch } from '../store/SearchPage/selectors';
 import { SearchPageFilters } from '../store/SearchPage/reducer';
+import { AppState, PictureOfTheDayResponse } from '../models';
+import defaultBg from '../img/default-bg.jpg';
 
 const HeaderContainer = styled.div`
     position: relative;
@@ -18,11 +19,6 @@ const HeaderImage = styled('div')<{ bgImage: string }>`
     background-image: url(${({ bgImage }) => bgImage});
     background-position: center;
     background-size: cover;
-    height: 100%;
-    width: 100%;
-`;
-
-const HeaderVideo = styled.iframe`
     height: 100%;
     width: 100%;
 `;
@@ -41,6 +37,11 @@ const SearchInput = styled.input`
         0 1px 8px 0 rgba(25, 27, 26, 0.08);
     border: none;
     outline: none;
+    z-index: 100;
+
+    @media (max-width: 1224px) {
+        width: 80%;
+    }
 `;
 
 export const Header = () => {
@@ -51,7 +52,9 @@ export const Header = () => {
     const { setSearch } = SearchPageFilters.bind(dispatch);
     const refInput = useRef<HTMLInputElement>(null);
 
-    const pictureOfTheDay = useSelector(selectPictureOfTheDayData);
+    const pictureOfTheDay = useSelector<AppState>(
+        (state) => state.pictureOfTheDay.data
+    ) as PictureOfTheDayResponse;
 
     const onInput = useCallback(
         (e) => {
@@ -84,10 +87,7 @@ export const Header = () => {
             {pictureOfTheDay && (
                 <>
                     {pictureOfTheDay.media_type === 'video' ? (
-                        <HeaderVideo
-                            frameBorder="0"
-                            src={`${pictureOfTheDay.url}&autoplay=1&controls=0&showinfo=0&loop=1&autohide=1&mute=1`}
-                        />
+                        <HeaderImage bgImage={defaultBg} />
                     ) : (
                         <HeaderImage bgImage={pictureOfTheDay.hdurl} />
                     )}

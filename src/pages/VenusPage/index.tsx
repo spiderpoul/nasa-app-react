@@ -1,18 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import CardGrid from '../../components/ImagesGrid';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectData, selectIsLoading } from '../../store/VenusPage/selectors';
-import { fetchVenusData } from '../../store/VenusPage/actions';
+import { VenusFetcher } from '../../store/VenusPage/reducer';
 
 function VenusPage() {
-    const dispatch = useDispatch();
-    const data = useSelector(selectData);
-    const isLoading = useSelector(selectIsLoading);
-
-    useEffect(() => {
-        dispatch(fetchVenusData());
-    }, [dispatch]);
+    const { data, isLoading } = VenusFetcher.useData();
 
     return <CardGrid items={data?.items} isLoading={isLoading} />;
 }

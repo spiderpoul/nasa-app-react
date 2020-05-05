@@ -2,16 +2,16 @@ import { PictureOfTheDayResponse, LibraryResponse } from '.';
 
 export interface AppState {
     pictureOfTheDay: PictureOfTheDayState;
-    mercuryPage: MercuryPageState;
-    venusPage: VenusPageState;
+    mercuryPage: FetcherModel<LibraryResponse>;
+    venusPage: FetcherModel<LibraryResponse>;
     earthPage: FetcherModel<LibraryResponse>;
-    marsPage: MarsPageState;
-    jupiterPage: JupiterPageState;
-    saturnPage: SaturnPageState;
-    uranusPage: UranusPageState;
-    neptunePage: NeptunePageState;
-    plutoPage: PlutoPageState;
-    moonPage: MoonPageState;
+    marsPage: FetcherModel<LibraryResponse>;
+    jupiterPage: FetcherModel<LibraryResponse>;
+    saturnPage: FetcherModel<LibraryResponse>;
+    uranusPage: FetcherModel<LibraryResponse>;
+    neptunePage: FetcherModel<LibraryResponse>;
+    plutoPage: FetcherModel<LibraryResponse>;
+    moonPage: FetcherModel<LibraryResponse>;
     searchPage: SearchPageState;
 }
 

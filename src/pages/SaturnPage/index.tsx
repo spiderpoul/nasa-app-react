@@ -1,18 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import CardGrid from '../../components/ImagesGrid';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectData, selectIsLoading } from '../../store/SaturnPage/selectors';
-import { fetchSaturnData } from '../../store/SaturnPage/actions';
+import { SaturnFetcher } from '../../store/SaturnPage/reducer';
 
 function SaturnPage() {
-    const dispatch = useDispatch();
-    const data = useSelector(selectData);
-    const isLoading = useSelector(selectIsLoading);
-
-    useEffect(() => {
-        dispatch(fetchSaturnData());
-    }, [dispatch]);
+    const { data, isLoading } = SaturnFetcher.useData();
 
     return <CardGrid items={data?.items} isLoading={isLoading} />;
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { selectPictureOfTheDayData } from '../../store/PictureOfTheDay/selectors';
-import { useSelector } from 'react-redux';
+import { APODFetcher } from '../../store/PictureOfTheDay/reducer';
 
 const Text = styled.div`
     font-size: 18px;
@@ -32,21 +31,21 @@ const Title = styled.div`
 `;
 
 const PictureOfTheDay = () => {
-    const pictureOfTheDay = useSelector(selectPictureOfTheDayData);
+    const { data } = APODFetcher.useData();
 
     return (
         <Container>
-            {pictureOfTheDay && (
+            {data && (
                 <>
-                    <Title>{pictureOfTheDay.title}</Title>
-                    <Text>{pictureOfTheDay.explanation}</Text>
-                    {pictureOfTheDay.media_type === 'video' ? (
+                    <Title>{data.title}</Title>
+                    <Text>{data.explanation}</Text>
+                    {data.media_type === 'video' ? (
                         <Video
                             frameBorder="0"
-                            src={`${pictureOfTheDay.url}&autoplay=1&controls=0&showinfo=0&loop=1&autohide=1&mute=1`}
+                            src={`${data.url}&autoplay=1&controls=0&showinfo=0&loop=1&autohide=1&mute=1`}
                         />
                     ) : (
-                        <Image src={pictureOfTheDay.hdurl} />
+                        <Image src={data.hdurl} />
                     )}
                 </>
             )}

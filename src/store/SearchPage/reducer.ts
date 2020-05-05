@@ -16,13 +16,18 @@ const SearchFiltersInitialState: SearchFiltersState = {
     search: '',
 };
 
+const setSearch = (a: { search: string }) => (s): SearchFiltersState => ({
+    ...s,
+    search: a.search,
+});
+
+const clearSearch = () => setSearch({ search: '' });
+
 export const SearchPageFilters = buildReducer(
     SearchFiltersInitialState,
     {
-        setSearch: (a: { search: string }) => (s) => ({
-            ...s,
-            search: a.search,
-        }),
+        setSearch,
+        clearSearch,
     },
     { prefix: 'SEARCH_PAGE_FILTERS' }
 );

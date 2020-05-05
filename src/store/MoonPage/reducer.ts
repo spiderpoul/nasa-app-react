@@ -1,42 +1,13 @@
-import { MoonPageState } from '../../models';
-import { ActionsTypes } from './actionsCreators';
-import {
-    MOON_PAGE_NASA_ERROR,
-    MOON_PAGE_NASA_REQUEST,
-    MOON_PAGE_NASA_SUCCESS,
-} from './constants';
+import { API_URL } from './constants';
+import { createReduxFetcher } from '../createReduxFetcher';
+import { LibraryResponse } from '../../models';
+import Axios from 'axios';
 
-const initState: MoonPageState = {
-    data: null,
-    isLoading: true,
-    error: null,
-};
+export const MoonFetcher = createReduxFetcher<LibraryResponse>({
+    fetcher: () => Axios.get(API_URL),
+    getState: (state) => state.moonPage,
+    mutate: (res) => res.data?.collection,
+    prefix: 'MOON_PAGE',
+});
 
-const MoonReducer = (state = initState, action: ActionsTypes) => {
-    switch (action.type) {
-        case MOON_PAGE_NASA_REQUEST: {
-            return {
-                ...state,
-                isLoading: true,
-            };
-        }
-        case MOON_PAGE_NASA_SUCCESS: {
-            return {
-                ...state,
-                isLoading: false,
-                data: action.payload.data,
-            };
-        }
-        case MOON_PAGE_NASA_ERROR: {
-            return {
-                ...state,
-                isLoading: false,
-                error: action.payload.error,
-            };
-        }
-        default:
-            return state;
-    }
-};
-
-export default MoonReducer;
+export default MoonFetcher.reducer;

@@ -26,8 +26,11 @@
         "node-sass": "^4.13.1",
         "prettier": "^1.19.1",
         "react": "^16.13.0",
+        "react-burger-menu": "^2.6.13",
         "react-content-loader": "^5.0.4",
         "react-dom": "^16.13.0",
+        "react-parallax": "^3.0.3",
+        "react-portal": "^4.2.1",
         "react-redux": "^7.2.0",
         "react-router-dom": "^5.1.2",
         "react-scripts": "3.4.0",
@@ -43,7 +46,8 @@
         "tslint-config-airbnb": "5.11.2",
         "tslint-react": "4.2.0",
         "tslint-react-hooks": "^2.2.2",
-        "typescript": "3.8.3"
+        "typescript": "3.8.3",
+        "use-media": "^1.4.0"
     },
     "scripts": {
         "start": "react-scripts start",

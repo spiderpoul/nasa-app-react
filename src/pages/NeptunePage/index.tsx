@@ -1,18 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import CardGrid from '../../components/ImagesGrid';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectData, selectIsLoading } from '../../store/NeptunePage/selectors';
-import { fetchNeptuneData } from '../../store/NeptunePage/actions';
+import { NeptuneFetcher } from '../../store/NeptunePage/reducer';
 
 function NeptunePage() {
-    const dispatch = useDispatch();
-    const data = useSelector(selectData);
-    const isLoading = useSelector(selectIsLoading);
-
-    useEffect(() => {
-        dispatch(fetchNeptuneData());
-    }, [dispatch]);
+    const { data, isLoading } = NeptuneFetcher.useData();
 
     return <CardGrid items={data?.items} isLoading={isLoading} />;
 }

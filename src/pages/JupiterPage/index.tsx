@@ -1,18 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import CardGrid from '../../components/ImagesGrid';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectData, selectIsLoading } from '../../store/JupiterPage/selectors';
-import { fetchJupiterData } from '../../store/JupiterPage/actions';
+import { JupiterFetcher } from '../../store/JupiterPage/reducer';
 
 function JupiterPage() {
-    const dispatch = useDispatch();
-    const data = useSelector(selectData);
-    const isLoading = useSelector(selectIsLoading);
-
-    useEffect(() => {
-        dispatch(fetchJupiterData());
-    }, [dispatch]);
+    const { data, isLoading } = JupiterFetcher.useData();
 
     return <CardGrid items={data?.items} isLoading={isLoading} />;
 }

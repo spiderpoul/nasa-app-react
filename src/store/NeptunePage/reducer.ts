@@ -1,42 +1,13 @@
-import { NeptunePageState } from '../../models';
-import { ActionsTypes } from './actionsCreators';
-import {
-    NEPTUNE_PAGE_NASA_ERROR,
-    NEPTUNE_PAGE_NASA_REQUEST,
-    NEPTUNE_PAGE_NASA_SUCCESS,
-} from './constants';
+import { API_URL } from './constants';
+import { createReduxFetcher } from '../createReduxFetcher';
+import { LibraryResponse } from '../../models';
+import Axios from 'axios';
 
-const initState: NeptunePageState = {
-    data: null,
-    isLoading: true,
-    error: null,
-};
+export const NeptuneFetcher = createReduxFetcher<LibraryResponse>({
+    fetcher: () => Axios.get(API_URL),
+    getState: (state) => state.neptunePage,
+    mutate: (res) => res.data?.collection,
+    prefix: 'NEPTUNE_PAGE',
+});
 
-const NeptuneReducer = (state = initState, action: ActionsTypes) => {
-    switch (action.type) {
-        case NEPTUNE_PAGE_NASA_REQUEST: {
-            return {
-                ...state,
-                isLoading: true,
-            };
-        }
-        case NEPTUNE_PAGE_NASA_SUCCESS: {
-            return {
-                ...state,
-                isLoading: false,
-                data: action.payload.data,
-            };
-        }
-        case NEPTUNE_PAGE_NASA_ERROR: {
-            return {
-                ...state,
-                isLoading: false,
-                error: action.payload.error,
-            };
-        }
-        default:
-            return state;
-    }
-};
-
-export default NeptuneReducer;
+export default NeptuneFetcher.reducer;

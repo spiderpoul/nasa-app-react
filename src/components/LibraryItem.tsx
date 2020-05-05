@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { LibraryItemModel, MediaType } from '../models';
 import styled from 'styled-components';
 import ZoomableImage from './ZoomableImage';
+import Axios from 'axios';
 
 const Container = styled.div`
     border-radius: 12px;
@@ -42,9 +43,8 @@ const LibraryItem: React.FC<LibraryItemProps> = ({ item }) => {
     useEffect(() => {
         if (isVideo) {
             const fetchData = async () => {
-                const data: any = await fetch(item.href);
-                const res = await data?.json();
-                const videoPreview = res?.find(
+                const res = await Axios.get(item.href);
+                const videoPreview = res?.data?.find(
                     (x) => x.indexOf('~preview.mp4') > -1
                 );
                 setVideoUrl(videoPreview);

@@ -1,21 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import CardGrid from '../../components/ImagesGrid';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-    selectMercuryData,
-    selectMercuryIsLoading,
-} from '../../store/MercuryPage/selectors';
-import { fetchMercuryData } from '../../store/MercuryPage/actions';
+import { MercuryFetcher } from '../../store/MercuryPage/reducer';
 
 function MercuryImages() {
-    const dispatch = useDispatch();
-    const data = useSelector(selectMercuryData);
-    const isLoading = useSelector(selectMercuryIsLoading);
-
-    useEffect(() => {
-        dispatch(fetchMercuryData());
-    }, [dispatch]);
+    const { data, isLoading } = MercuryFetcher.useData();
 
     return <CardGrid items={data?.items} isLoading={isLoading} />;
 }
