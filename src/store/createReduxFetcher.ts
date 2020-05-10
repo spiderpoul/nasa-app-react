@@ -46,6 +46,8 @@ export function createReduxFetcher<TModel>(arg: {
         { prefix }
     );
 
+    let prefetched = false;
+
     const fetchData = (...args) => async (dispatch) => {
         const { loadError, loadRequest, loadSuccess } = bind(dispatch);
         loadRequest({});
@@ -55,6 +57,11 @@ export function createReduxFetcher<TModel>(arg: {
         } catch (error) {
             loadError({ error });
         }
+    };
+
+    const prefetch = (...args) => (dispatch) => {
+        prefetched = true;
+        dispatch(fetchData(...args));
     };
 
     const useData = (...args) => {
@@ -67,8 +74,9 @@ export function createReduxFetcher<TModel>(arg: {
         );
 
         useEffect(() => {
-            loadData();
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            if (!prefetched) {
+                loadData();
+            }
         }, [loadData]);
 
         return { ...state, loadData };
@@ -79,5 +87,6 @@ export function createReduxFetcher<TModel>(arg: {
         actions: actionCreators,
         useData,
         fetchData,
+        prefetch,
     };
 }
