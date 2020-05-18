@@ -41,10 +41,7 @@ const PictureOfTheDay = () => {
                     <Title>{pictureOfTheDay.title}</Title>
                     <Text>{pictureOfTheDay.explanation}</Text>
                     {pictureOfTheDay.media_type === 'video' ? (
-                        <Video
-                            frameBorder="0"
-                            src={`${pictureOfTheDay.url}&autoplay=1&controls=0&showinfo=0&loop=1&autohide=1&mute=1`}
-                        />
+                        <Video frameBorder="0" src={`${pictureOfTheDay.url}`} />
                     ) : (
                         <Image src={pictureOfTheDay.hdurl} />
                     )}
