@@ -1,18 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import CardGrid from '../../components/ImagesGrid';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectData, selectIsLoading } from '../../store/PlutoPage/selectors';
-import { fetchPlutoData } from '../../store/PlutoPage/actions';
+import { PlutoFetcher } from '../../store/PlutoPage/reducer';
 
 function PlutoPage() {
-    const dispatch = useDispatch();
-    const data = useSelector(selectData);
-    const isLoading = useSelector(selectIsLoading);
-
-    useEffect(() => {
-        dispatch(fetchPlutoData());
-    }, [dispatch]);
+    const { data, isLoading } = PlutoFetcher.useData();
 
     return <CardGrid items={data?.items} isLoading={isLoading} />;
 }

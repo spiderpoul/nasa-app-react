@@ -2,17 +2,23 @@ import { PictureOfTheDayResponse, LibraryResponse } from '.';
 
 export interface AppState {
     pictureOfTheDay: PictureOfTheDayState;
-    mercuryPage: MercuryPageState;
-    venusPage: VenusPageState;
-    earthPage: EarthPageState;
-    marsPage: MarsPageState;
-    jupiterPage: JupiterPageState;
-    saturnPage: SaturnPageState;
-    uranusPage: UranusPageState;
-    neptunePage: NeptunePageState;
-    plutoPage: PlutoPageState;
-    moonPage: MoonPageState;
+    mercuryPage: FetcherModel<LibraryResponse>;
+    venusPage: FetcherModel<LibraryResponse>;
+    earthPage: FetcherModel<LibraryResponse>;
+    marsPage: FetcherModel<LibraryResponse>;
+    jupiterPage: FetcherModel<LibraryResponse>;
+    saturnPage: FetcherModel<LibraryResponse>;
+    uranusPage: FetcherModel<LibraryResponse>;
+    neptunePage: FetcherModel<LibraryResponse>;
+    plutoPage: FetcherModel<LibraryResponse>;
+    moonPage: FetcherModel<LibraryResponse>;
     searchPage: SearchPageState;
+}
+
+export interface FetcherModel<TModel> {
+    data: TModel | null;
+    isLoading: boolean;
+    error: boolean;
 }
 
 export interface PictureOfTheDayState {
@@ -22,9 +28,11 @@ export interface PictureOfTheDayState {
 }
 
 export interface SearchPageState {
-    isLoading: boolean;
-    error: any;
-    data: LibraryResponse | null;
+    model: FetcherModel<LibraryResponse>;
+    filters: SearchFiltersState;
+}
+
+export interface SearchFiltersState {
     search: string;
 }
 

@@ -1,42 +1,13 @@
-import { VenusPageState } from '../../models';
-import { ActionsTypes } from './actionsCreators';
-import {
-    VENUS_PAGE_NASA_ERROR,
-    VENUS_PAGE_NASA_REQUEST,
-    VENUS_PAGE_NASA_SUCCESS,
-} from './constants';
+import { API_URL } from './constants';
+import { createReduxFetcher } from '../createReduxFetcher';
+import { LibraryResponse } from '../../models';
+import Axios from 'axios';
 
-const initState: VenusPageState = {
-    data: null,
-    isLoading: true,
-    error: null,
-};
+export const VenusFetcher = createReduxFetcher<LibraryResponse>({
+    fetcher: () => Axios.get(API_URL),
+    getState: (state) => state.venusPage,
+    mutate: (res) => res.data?.collection,
+    prefix: 'VENUS_PAGE',
+});
 
-const VenusReducer = (state = initState, action: ActionsTypes) => {
-    switch (action.type) {
-        case VENUS_PAGE_NASA_REQUEST: {
-            return {
-                ...state,
-                isLoading: true,
-            };
-        }
-        case VENUS_PAGE_NASA_SUCCESS: {
-            return {
-                ...state,
-                isLoading: false,
-                data: action.payload.data,
-            };
-        }
-        case VENUS_PAGE_NASA_ERROR: {
-            return {
-                ...state,
-                isLoading: false,
-                error: action.payload.error,
-            };
-        }
-        default:
-            return state;
-    }
-};
-
-export default VenusReducer;
+export default VenusFetcher.reducer;

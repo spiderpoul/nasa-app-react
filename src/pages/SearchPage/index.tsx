@@ -3,15 +3,13 @@ import styled from 'styled-components';
 
 import CardGrid from '../../components/ImagesGrid';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    selectData,
-    selectIsLoading,
-    selectSearch,
-} from '../../store/SearchPage/selectors';
-import { fetchSearchData } from '../../store/SearchPage/actions';
-import { setSearch } from '../../store/SearchPage/actionsCreators';
+import { selectSearch } from '../../store/SearchPage/selectors';
 import { useQuerySearch } from '../../hooks/useQuerySearch';
 import { useDebounce } from '../../hooks/useDebounce';
+import {
+    SearchPageFilters,
+    SearchFetcher,
+} from '../../store/SearchPage/reducer';
 
 const Placeholder = styled.div`
     padding: 24px;
@@ -21,15 +19,13 @@ const Placeholder = styled.div`
 
 function SearchImages() {
     const dispatch = useDispatch();
-    const data = useSelector(selectData);
     const search = useSelector(selectSearch);
     const searchDebounce = useDebounce(search);
-    const isLoading = useSelector(selectIsLoading);
     const querySearch = useQuerySearch();
 
-    useEffect(() => {
-        dispatch(fetchSearchData({ search: searchDebounce }));
-    }, [dispatch, searchDebounce]);
+    const { setSearch } = SearchPageFilters.bind(dispatch);
+
+    const { data, isLoading } = SearchFetcher.useData(searchDebounce);
 
     useEffect(() => {
         if (!search && querySearch) {

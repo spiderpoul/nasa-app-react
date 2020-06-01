@@ -1,18 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import CardGrid from '../../components/ImagesGrid';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectData, selectIsLoading } from '../../store/UranusPage/selectors';
-import { fetchUranusData } from '../../store/UranusPage/actions';
+import { UranusFetcher } from '../../store/UranusPage/reducer';
 
 function UranusPage() {
-    const dispatch = useDispatch();
-    const data = useSelector(selectData);
-    const isLoading = useSelector(selectIsLoading);
-
-    useEffect(() => {
-        dispatch(fetchUranusData());
-    }, [dispatch]);
+    const { data, isLoading } = UranusFetcher.useData();
 
     return <CardGrid items={data?.items} isLoading={isLoading} />;
 }

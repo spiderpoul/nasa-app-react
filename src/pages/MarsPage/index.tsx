@@ -1,18 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import CardGrid from '../../components/ImagesGrid';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectData, selectIsLoading } from '../../store/MarsPage/selectors';
-import { fetchMarsData } from '../../store/MarsPage/actions';
+import { MarsFetcher } from '../../store/MarsPage/reducer';
 
 function JupiterPage() {
-    const dispatch = useDispatch();
-    const data = useSelector(selectData);
-    const isLoading = useSelector(selectIsLoading);
-
-    useEffect(() => {
-        dispatch(fetchMarsData());
-    }, [dispatch]);
+    const { data, isLoading } = MarsFetcher.useData();
 
     return <CardGrid items={data?.items} isLoading={isLoading} />;
 }

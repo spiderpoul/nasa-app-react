@@ -1,42 +1,13 @@
-import { JupiterPageState } from '../../models';
-import { ActionsTypes } from './actionsCreators';
-import {
-    JUPITER_PAGE_NASA_ERROR,
-    JUPITER_PAGE_NASA_REQUEST,
-    JUPITER_PAGE_NASA_SUCCESS,
-} from './constants';
+import { API_URL } from './constants';
+import { createReduxFetcher } from '../createReduxFetcher';
+import { LibraryResponse } from '../../models';
+import Axios from 'axios';
 
-const initState: JupiterPageState = {
-    data: null,
-    isLoading: true,
-    error: null,
-};
+export const JupiterFetcher = createReduxFetcher<LibraryResponse>({
+    fetcher: () => Axios.get(API_URL),
+    getState: (state) => state.jupiterPage,
+    mutate: (res) => res.data?.collection,
+    prefix: 'JUPITER_PAGE',
+});
 
-const JupiterReducer = (state = initState, action: ActionsTypes) => {
-    switch (action.type) {
-        case JUPITER_PAGE_NASA_REQUEST: {
-            return {
-                ...state,
-                isLoading: true,
-            };
-        }
-        case JUPITER_PAGE_NASA_SUCCESS: {
-            return {
-                ...state,
-                isLoading: false,
-                data: action.payload.data,
-            };
-        }
-        case JUPITER_PAGE_NASA_ERROR: {
-            return {
-                ...state,
-                isLoading: false,
-                error: action.payload.error,
-            };
-        }
-        default:
-            return state;
-    }
-};
-
-export default JupiterReducer;
+export default JupiterFetcher.reducer;

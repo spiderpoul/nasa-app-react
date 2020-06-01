@@ -1,36 +1,43 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { NAV_ITEMS } from '../constants';
 import { NavLink } from 'react-router-dom';
 
-const NAV_ITEMS = [
-    { to: '/', title: 'Picture of the day', exact: true },
-    { to: '/earth', title: 'Earth' },
-    { to: '/moon', title: 'Moon' },
-    { to: '/uranus', title: 'Uranus' },
-    { to: '/jupiter', title: 'Jupiter' },
-    { to: '/mars', title: 'Mars' },
-    { to: '/mercury', title: 'Mercury' },
-    { to: '/neptune', title: 'Neptune' },
-    { to: '/saturn', title: 'Saturn' },
-    { to: '/venus', title: 'Venus' },
-    { to: '/pluto', title: 'Pluto' },
-];
-
 const Nav: React.FC<{}> = () => {
+    const dispatch = useDispatch();
+
     return (
         <NavContainer>
-            {NAV_ITEMS.map(({ title, to, exact }) => (
-                <NavItem activeClassName="active" to={to} exact={exact}>
+            {NAV_ITEMS.map(({ title, to, exact, prefetch }) => (
+                <NavLinkPrefetch
+                    activeClassName="active"
+                    to={to}
+                    exact={exact}
+                    prefetch={prefetch && (() => dispatch(prefetch()))}
+                >
                     {title}
-                </NavItem>
+                </NavLinkPrefetch>
             ))}
         </NavContainer>
     );
 };
 
+const NavLinkPrefetch = ({ prefetch, ...props }) => {
+    const [isVisited, setIsVisited] = useState(false);
+
+    const onMouseEnter = useCallback(() => {
+        if (!isVisited) {
+            setIsVisited(true);
+            prefetch && prefetch();
+        }
+    }, [isVisited, prefetch]);
+
+    return <NavItem {...(props as any)} onMouseEnter={onMouseEnter} />;
+};
+
 const NavItem = styled(NavLink)`
     position: relative;
-    padding: 0 15px;
     font-size: 24px;
     text-decoration: none;
     color: #000;
@@ -60,6 +67,10 @@ const NavContainer = styled.div`
     margin: 0 -24px;
     border-bottom: 1px solid #ccc;
     flex-wrap: wrap;
+
+    @media (max-width: 1224px) {
+        display: none;
+    }
 `;
 
 export default Nav;

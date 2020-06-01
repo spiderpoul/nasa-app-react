@@ -47,7 +47,7 @@ const CardGrid: React.FC<ImagesGridProps> = ({ items, isLoading }) => {
                 leaved={scaleDown.leaved}
             >
                 {items?.length &&
-                    items?.map((item) => {
+                    items?.slice(0, 10).map((item) => {
                         return <LibraryItem item={item} key={item.href} />;
                     })}
             </StackGrid>
